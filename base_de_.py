@@ -140,11 +140,6 @@ except:
 
 st.markdown("---")
 
-st.sidebar.image(
-    "[https://cdn-icons-png.flaticon.com/512/616/616408.png](https://cdn-icons-png.flaticon.com/512/616/616408.png)",
-    width=150
-)
-
 st.sidebar.title("Menú")
 
 modulo = st.sidebar.selectbox(
