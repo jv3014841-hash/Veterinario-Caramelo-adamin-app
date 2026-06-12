@@ -1,3 +1,6 @@
+Aquí tienes el código completo y corregido de tu archivo `base_de_.py` listo para copiar, pegar y subir a tu GitHub. Ya corregí el paréntesis mocho en la sección de vacunas:
+
+```python
 # -- coding: utf-8 --
 
 import streamlit as st
@@ -166,7 +169,7 @@ if modulo == "🐶 Mascotas":
         "Eliminar"
     ])
 
-    # ---------------- VER ----------------
+    # ---------------- VER MASCOTAS ----------------
     with tab1:
         mascotas = list(coleccion_mascota.find())
 
@@ -204,7 +207,7 @@ if modulo == "🐶 Mascotas":
         else:
             st.info("No hay mascotas registradas.")
 
-    # ---------------- AGREGAR ----------------
+    # ---------------- AGREGAR MASCOTAS ----------------
     with tab2:
         with st.form("agregar_mascota"):
             col1, col2 = st.columns(2)
@@ -239,7 +242,7 @@ if modulo == "🐶 Mascotas":
                 st.success("Mascota registrada")
                 st.rerun()
 
-    # ---------------- ELIMINAR ----------------
+    # ---------------- ELIMINAR MASCOTAS ----------------
     with tab3:
         mascotas = list(coleccion_mascota.find())
 
@@ -268,7 +271,7 @@ elif modulo == "💉 Vacunas":
         "Eliminar"
     ])
 
-    # ---------------- VER ----------------
+    # ---------------- VER VACUNAS ----------------
     with tab1:
         vacunas = list(coleccion_vacuna.find())
 
@@ -294,7 +297,137 @@ elif modulo == "💉 Vacunas":
         else:
             st.info("No hay vacunas registradas.")
 
-    # ---------------- AGREGAR ----------------
+    # ---------------- AGREGAR VACUNAS (CORREGIDO) ----------------
     with tab2:
         with st.form("agregar_vacuna"):
-            id_vacuna = st.number_input("ID Vacuna", min_value
+            id_vacuna = st.number_input("ID Vacuna", min_value=1, step=1)
+            nombre = st.text_input("Nombre")
+            precio = st.number_input("Precio", min_value=0.0)
+            tipo = st.text_input("Tipo")
+            fecha_aplicacion = st.text_input("Fecha Aplicación")
+            fecha_caducidad = st.text_input("Fecha Caducidad")
+            contenido = st.text_input("Contenido")
+            dosis = st.text_input("Dosis")
+            estado = st.selectbox("Estado", ["Comprado", "Aplicado", "Caducado"])
+
+            guardar = st.form_submit_button("Guardar Vacuna")
+
+            if guardar:
+                coleccion_vacuna.insert_one({
+                    "id_vacuna": int(id_vacuna),
+                    "Nombre": nombre,
+                    "Precio": precio,
+                    "Tipo": tipo,
+                    "Fecha_aplicacion": fecha_aplicacion,
+                    "Fecha_caducidad": fecha_caducidad,
+                    "Contenido": contenido,
+                    "Dosis": dosis,
+                    "Estado": estado
+                })
+                st.success("Vacuna registrada")
+                st.rerun()
+
+    # ---------------- ELIMINAR VACUNAS ----------------
+    with tab3:
+        vacunas = list(coleccion_vacuna.find())
+
+        if vacunas:
+            opciones = {
+                f"{v['Nombre']} (ID:{v['id_vacuna']})": v
+                for v in vacunas
+            }
+
+            seleccion = st.selectbox("Vacuna", opciones.keys())
+            vacuna = opciones[seleccion]
+
+            if st.button("Eliminar Vacuna"):
+                coleccion_vacuna.delete_one({"_id": vacuna["_id"]})
+                st.success("Vacuna eliminada")
+                st.rerun()
+
+# ADOPTANTES
+elif modulo == "👨‍👩‍👧 Adoptantes":
+
+    st.title("👨‍👩‍👧 Gestión de Adoptantes")
+
+    tab1, tab2, tab3 = st.tabs([
+        "Ver",
+        "Agregar",
+        "Eliminar"
+    ])
+
+    # ---------------- VER ADOPTANTES ----------------
+    with tab1:
+        adoptantes = list(coleccion_adoptante.find())
+
+        if adoptantes:
+            datos = []
+            for a in adoptantes:
+                datos.append({
+                    "ID": a.get("id_adoptante"),
+                    "Nombre": a.get("Nombre"),
+                    "Apellido": a.get("Apellido"),
+                    "Edad": a.get("Edad"),
+                    "INE": a.get("INE"),
+                    "Domicilio": a.get("Domicilio"),
+                    "Telefono": a.get("Telefono"),
+                    "Correo": a.get("Gmail"),
+                    "Vivienda": a.get("T_Vivienda")
+                })
+
+            st.dataframe(
+                pd.DataFrame(datos),
+                use_container_width=True
+            )
+        else:
+            st.info("No existen adoptantes.")
+
+    # ---------------- AGREGAR ADOPTANTES ----------------
+    with tab2:
+        with st.form("adoptante"):
+            id_adoptante = st.number_input("ID Adoptante", min_value=1, step=1)
+            nombre = st.text_input("Nombre")
+            apellido = st.text_input("Apellido")
+            edad = st.number_input("Edad", min_value=18)
+            ine = st.text_input("INE")
+            domicilio = st.text_input("Domicilio")
+            telefono = st.text_input("Telefono")
+            gmail = st.text_input("Correo")
+            vivienda = st.selectbox("Tipo de Vivienda", ["Casa", "Departamento", "Rancho", "Otro"])
+
+            guardar = st.form_submit_button("Guardar Adoptante")
+
+            if guardar:
+                coleccion_adoptante.insert_one({
+                    "id_adoptante": int(id_adoptante),
+                    "Nombre": nombre,
+                    "Apellido": apellido,
+                    "Edad": edad,
+                    "INE": ine,
+                    "Domicilio": domicilio,
+                    "Telefono": telefono,
+                    "Gmail": gmail,
+                    "T_Vivienda": vivienda
+                })
+                st.success("Adoptante registrado")
+                st.rerun()
+
+    # ---------------- ELIMINAR ADOPTANTES ----------------
+    with tab3:
+        adoptantes = list(coleccion_adoptante.find())
+
+        if adoptantes:
+            opciones = {
+                f"{a['Nombre']} {a['Apellido']}": a
+                for a in adoptantes
+            }
+
+            seleccion = st.selectbox("Adoptante", opciones.keys())
+            adoptante = opciones[seleccion]
+
+            if st.button("Eliminar Adoptante"):
+                coleccion_adoptante.delete_one({"_id": adoptante["_id"]})
+                st.success("Adoptante eliminado")
+                st.rerun()
+
+```
