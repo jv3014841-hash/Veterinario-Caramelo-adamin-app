@@ -426,5 +426,3 @@ elif modulo == "👨‍👩‍👧 Adoptantes":
                 coleccion_adoptante.delete_one({"_id": adoptante["_id"]})
                 st.success("Adoptante eliminado")
                 st.rerun()
-
-```
