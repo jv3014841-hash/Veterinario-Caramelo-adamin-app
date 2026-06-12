@@ -1,6 +1,3 @@
-Aquí tienes el código completo y corregido de tu archivo `base_de_.py` listo para copiar, pegar y subir a tu GitHub. Ya corregí el paréntesis mocho en la sección de vacunas:
-
-```python
 # -- coding: utf-8 --
 
 import streamlit as st
