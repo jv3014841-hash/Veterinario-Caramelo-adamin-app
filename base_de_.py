@@ -141,7 +141,7 @@ except:
 st.markdown("---")
 
 st.sidebar.image(
-    "https://cdn-icons-png.flaticon.com/512/616/616408.png",
+    "[https://cdn-icons-png.flaticon.com/512/616/616408.png](https://cdn-icons-png.flaticon.com/512/616/616408.png)",
     width=150
 )
 
@@ -294,7 +294,7 @@ elif modulo == "💉 Vacunas":
         else:
             st.info("No hay vacunas registradas.")
 
-    # ---------------- AGREGAR VACUNAS (CORREGIDO) ----------------
+    # ---------------- AGREGAR VACUNAS ----------------
     with tab2:
         with st.form("agregar_vacuna"):
             id_vacuna = st.number_input("ID Vacuna", min_value=1, step=1)
